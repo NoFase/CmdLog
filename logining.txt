@@ -1,0 +1,29 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ 
+
+Welcome to SoftX3000 Operation and Maintenance Center
+
+Version : SoftX3000 V300R011
+
+Copyright(c) HuaWei. All Rights Reserved
+
+ 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+ 
+
++++    Cheboksary        2018-03-28 07:30:40+03:00
+
+O&M    #7603447
+
+%%LGI:op="smednyh", PWD ="*****", SER="10.140.129.181---O&M System";%%
+
+RETCODE = 0  Operation succeeded
+
+ 
+
+smednyh logged in successfully
+
+---    END
