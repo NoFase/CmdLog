@@ -9,13 +9,18 @@ import java.util.TimerTask;
 
 public class TimeSetting {
     public  ConnectorToServers connectorToServers;
+    private final long LONGDAYBYSECONDS = 86400000;
 
     public TimeSetting() {
 
+        MyDate time = new MyDate();
+        Date startTime = time.setStartTime();
+
+        System.out.println(time.setStartTime());
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-                    connectorToServers = new ConnectorToServers();
+                    connectorToServers = new ConnectorToServers(new MyDate());
                     connectorToServers.connectToServer();
                     try {
                         Thread.sleep(10000);
@@ -24,11 +29,9 @@ public class TimeSetting {
                     }
                     System.out.println(new GregorianCalendar().getTime());
                     connectorToServers.disconnectFromServer();
-
                 }
             };
         Timer timer =  new Timer();
-        timer.schedule(timerTask, 0, 10000);
-
+        timer.schedule(timerTask, startTime, LONGDAYBYSECONDS);
     }
 }

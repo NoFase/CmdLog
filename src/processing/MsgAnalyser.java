@@ -75,15 +75,12 @@ public class MsgAnalyser {
 //                if (!line.contains("TRF") || !login.equals("AutoTask"))
                 if (!value.contains("TRF"))
                 {
-                    StringBuilder sb = new StringBuilder(value);
-                    detailInfo = sb.delete(0, 28).toString();// deleting "Detail operation command:"
+                    if (!value.contains("ALMLOG")) {
+                        StringBuilder sb = new StringBuilder(value);
+                        detailInfo = sb.delete(0, 28).toString();// deleting "Detail operation command:"
+                    }
                 }
-//                zeroing(); // all parameters we equate to null
-
             }
         }
-
-
-
     }
 }

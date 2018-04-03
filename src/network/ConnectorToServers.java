@@ -2,6 +2,7 @@ package network;
 
 import processing.EntryInLog;
 import processing.MsgAnalyser;
+import processing.MyDate;
 import processing.SaveToFileLog;
 
 import java.io.IOException;
@@ -9,13 +10,20 @@ import java.io.IOException;
 public class ConnectorToServers implements TCPConnectionListener {
 
     public static TCPConnection connection;
+//    private final long LONGDAYBYSECONDS = 120000;
+    private final long LONGDAYBYSECONDS = 86400000;
     private String loginCommand = "LGI:op=\"smednyh\", PWD =\"SoftX3000\";";
-//    String IP_ADDR = "10.140.27.8";
-    String IP_ADDR = "127.0.0.1";
+    String IP_ADDR = "10.140.27.8";
+//    String IP_ADDR = "127.0.0.1";
     int PORT = 6000;
     private Boolean checkLoggin = false;
-    private String command = "LST CMDLOG: ST=2018&03&05&00&00&00, QM=All;";
+//    private String command = "LST CMDLOG: ST=2018&03&05&00&00&00, QM=All;";
     private int count = 0;
+    private MyDate time;
+
+    public ConnectorToServers(MyDate time) {
+        this.time = time;
+    }
 
     EntryInLog entryInLog; // creating class with all parameters from line session enters
 
@@ -30,8 +38,8 @@ public class ConnectorToServers implements TCPConnectionListener {
 //        Receiving something from server
         MsgAnalyser analyser = new MsgAnalyser(value);
         if (analyser.firstAnalysing()) {// checking for entering command into the server (need send command or no)
-            connection.sendString(command);
-            System.out.println("Sending to server command: " + command);
+            connection.sendString(creatingCommand());
+//            System.out.println("Sending to server command: " + command);
         }
         else analyser.secondAnalysing(); //analyse input line
         if (analyser.getLogin() != null) {//analyse first line, if this first input that need initialisate class EntryInLog
@@ -72,5 +80,10 @@ public class ConnectorToServers implements TCPConnectionListener {
     }
     public void disconnectFromServer(){
         connection.disconnect();
+    }
+
+    private String creatingCommand (){
+        return new StringBuilder().append("LST CMDLOG: ST=").append(time.dateForCommand(LONGDAYBYSECONDS)).append("&01&00&00, ET=")
+                .append(time.dateForCommand(0)).append("&01&00&00, QM=ALL;").toString();
     }
 }
