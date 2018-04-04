@@ -6,26 +6,29 @@ import processing.MyDate;
 import processing.SaveToFileLog;
 
 import java.io.IOException;
+import java.util.Map;
 
-public class ConnectorToServers implements TCPConnectionListener {
+public class ConnectorToServers extends Thread implements TCPConnectionListener {
 
     public static TCPConnection connection;
-//    private final long LONGDAYBYSECONDS = 120000;
-    private final long LONGDAYBYSECONDS = 86400000;
-    private String loginCommand = "LGI:op=\"smednyh\", PWD =\"SoftX3000\";";
-    String IP_ADDR = "10.140.27.8";
-//    String IP_ADDR = "127.0.0.1";
-    int PORT = 6000;
-    private Boolean checkLoggin = false;
-//    private String command = "LST CMDLOG: ST=2018&03&05&00&00&00, QM=All;";
-    private int count = 0;
     private MyDate time;
+    private Map.Entry<String,String> server;
+    private EntryInLog entryInLog; // creating class with all parameters from line session enters
 
-    public ConnectorToServers(MyDate time) {
+    //    private final long LONGDAYBYSECONDS = 120000;
+    private final long LONGDAYBYSECONDS = 86400000;
+    private int PORT = 6000;
+    private int count = 0; // only for numbering lines to outline
+
+    private String loginCommand = "LGI:op=\"smednyh\", PWD =\"SoftX3000\";";
+    private String IP_ADDR;
+//    String IP_ADDR = "127.0.0.1";
+//    String IP_ADDR = "127.0.0.1";
+
+    public ConnectorToServers(MyDate time, Map.Entry<String, String> server) {
         this.time = time;
+        this.server = server;
     }
-
-    EntryInLog entryInLog; // creating class with all parameters from line session enters
 
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
@@ -48,7 +51,7 @@ public class ConnectorToServers implements TCPConnectionListener {
         } else if (analyser.getDetailInfo() != null) {// if the second line need set detail info in EntryInLog
             entryInLog.setDetailInfo(analyser.getDetailInfo());
             if (filter()) {
-                new SaveToFileLog(entryInLog, count); // to save in fileLog
+                new SaveToFileLog(entryInLog, count, server.getValue()); // to save in fileLog
                 count++;
             }
         }
@@ -71,16 +74,24 @@ public class ConnectorToServers implements TCPConnectionListener {
     }
 
 
-    public void connectToServer() {
+    public void run() {
         try {
+            IP_ADDR = server.getKey();
             connection = new TCPConnection(this, IP_ADDR, PORT);
         } catch (IOException e) {
             System.out.println("Connection exception: " + e);
         }
     }
-    public void disconnectFromServer(){
+
+    @Override
+    public void interrupt() {
         connection.disconnect();
+        super.interrupt();
     }
+
+//    public void disconnectFromServer(){
+//        connection.disconnect();
+//    }
 
     private String creatingCommand (){
         return new StringBuilder().append("LST CMDLOG: ST=").append(time.dateForCommand(LONGDAYBYSECONDS)).append("&01&00&00, ET=")
