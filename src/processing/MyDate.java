@@ -10,11 +10,15 @@ public class MyDate {
     public Date setStartTime(){
         String time[] = form.format(new Date().getTime()).split("\\s+")[0].split("&");
 //        need write check when changing month, and year
+//        return new Date(Integer.parseInt(time[0])- 1900, 3, 5, 12, 37); // for testing
         return new Date(Integer.parseInt(time[0])- 1900, Integer.parseInt(time[1]) - 1, Integer.parseInt(time[2]) + 1, 01, 00);
     }
 
     public String dateForCommand (long period){
         return form.format(new Date().getTime() - period).split("\\s+")[0];
+    }
+    public String localDate(){
+        return form.format(new Date().getTime());
     }
 
 }

@@ -6,6 +6,7 @@ import java.util.*;
 
 public class TimeSetting {
     public  Thread connectorToServers;
+//    private final long LONGDAYBYSECONDS = 600000; // for testing
     private final long LONGDAYBYSECONDS = 86400000;
 
     public TimeSetting() {
@@ -17,7 +18,6 @@ public class TimeSetting {
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {
-
                     for (HashMap.Entry<String,String> server : ListOfServers.getServers().entrySet()) {
                         connectorToServers = new ConnectorToServers(new MyDate(), server);
                         connectorToServers.run();

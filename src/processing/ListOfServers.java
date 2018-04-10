@@ -15,7 +15,7 @@ public class ListOfServers {
     }
 
     public ListOfServers() throws IOException {
-//      open file in currently derictory with list of servers
+//      open file in currently directory with list of servers
         br = new BufferedReader(new FileReader(Paths.get("").toAbsolutePath().toString() + "/serversList.txt"));
 //        initialisation HashMap
         servers = new HashMap<>();
