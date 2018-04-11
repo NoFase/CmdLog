@@ -24,7 +24,7 @@ public class SaveToFileLog {
                 append(entryInLog.getLogin() + "\t\t").append(entryInLog.getIpAddress() + ":\t").
                 append(entryInLog.getDetailInfo());
         bw.write(sb.toString() + "\r\n");
-        bw.write(new MyDate().localDate() + "\r\n");
+//        bw.write(new MyDate().localDate() + "\r\n");
         bw.flush();
     }
 }

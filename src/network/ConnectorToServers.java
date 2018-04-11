@@ -31,7 +31,7 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
 
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
-        System.out.println("Connected!");
+        System.out.println("Connected to: " + connection.getSocket());
         connection.sendString(loginCommand);
     }
 
@@ -70,7 +70,7 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
 
     @Override
     public void onException(TCPConnection tcpConnection, Exception e) {
-        System.out.println("Something went wrong!!!\r\n" + e);
+//        System.out.println("Something went wrong!!!\r\n" + e);
     }
 
 

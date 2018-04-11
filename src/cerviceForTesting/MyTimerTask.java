@@ -1,6 +1,8 @@
 package cerviceForTesting;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Timer;
@@ -15,19 +17,15 @@ public class MyTimerTask {
 
         System.out.println(form.format(time2));
 
+        LocalDate localDate = LocalDate.now();
+        System.out.println(localDate);
+        LocalDate ld = null;
 
+             ld = localDate.plusDays(1);
+            System.out.println(ld);
 
-//        System.out.println(form.format(">>>> " + time2));
+        Date d1 = java.sql.Date.valueOf(ld);
+        System.out.println(form.format(d1) + " <<<<====" );
 
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.print("enter = > ");
-                System.out.println(form.format(new Date()));
-            }
-        };
-
-        timer.scheduleAtFixedRate(task, time2, 60000);
     }
 }
