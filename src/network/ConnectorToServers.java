@@ -16,7 +16,7 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
     private EntryInLog entryInLog; // creating class with all parameters from line session enters
 
 //    private final long LONGDAYBYSECONDS = 600000; for testing
-    private final long LONGDAYBYSECONDS = 8640000;
+    private final long LONGDAYBYSECONDS = 86400000;
     private int PORT = 6000;
     private int count = 0; // only for numbering lines to outline
 
@@ -94,8 +94,8 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
 //    }
 
     private String creatingCommand (){
-//        return new StringBuilder().append("LST CMDLOG: ST=").append(time.dateForCommand(LONGDAYBYSECONDS)).append("&01&00&00, ET=")
-//                .append(time.dateForCommand(0)).append("&01&00&00, QM=ALL;").toString();
-        return new StringBuilder().append("LST CMDLOG: ST=2018&04&04&12&00&00, QM=All;").toString();
+        return new StringBuilder().append("LST CMDLOG: ST=").append(time.dateForCommand(LONGDAYBYSECONDS)).append("&01&00&00, ET=")
+                .append(time.dateForCommand(0)).append("&01&00&00, QM=ALL;").toString();
+//        return new StringBuilder().append("LST CMDLOG: ST=2018&04&04&12&00&00, QM=All;").toString();
     }
 }

@@ -3,6 +3,7 @@ package processing;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 public class MyDate {
@@ -17,7 +18,7 @@ public class MyDate {
 //        return new Date(Integer.parseInt(time[0])- 1900, 3, 5, 12, 37); // for testing
         localDate = LocalDate.now().plusDays(1).atTime(1, 0);
 //        return new Date(Integer.parseInt(time[0])- 1900, Integer.parseInt(time[1]) - 1, Integer.parseInt(time[2]) + 1, 01, 00);
-        return java.sql.Date.valueOf(String.valueOf(localDate));
+        return Date.from(localDate.atZone(ZoneId.systemDefault()).toInstant()); //convert LocalDateTime to Date
     }
 
     public String dateForCommand (long period){
