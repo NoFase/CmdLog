@@ -1,5 +1,6 @@
 package processing;
 
+import debuging.CollectorLogs;
 import network.ConnectorToServers;
 
 import java.util.*;
@@ -14,7 +15,7 @@ public class TimeSetting {
         MyDate time = new MyDate();
         Date startTime = time.setStartTime();
 
-        System.out.println(time.setStartTime());
+//        System.out.println(time.setStartTime());
             TimerTask timerTask = new TimerTask() {
                 @Override
                 public void run() {

@@ -1,5 +1,6 @@
 package network;
 
+import debuging.CollectorLogs;
 import processing.EntryInLog;
 import processing.MsgAnalyser;
 import processing.MyDate;
@@ -30,8 +31,9 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
     }
 
     @Override
-    public void onConnectionReady(TCPConnection tcpConnection) {
-        System.out.println("Connected to: " + connection.getSocket());
+    public void onConnectionReady(TCPConnection tcpConnection) throws IOException {
+//        System.out.println("Connected to: " + connection.getSocket());
+        CollectorLogs.debugging("Connected to: " + connection.getSocket());
         connection.sendString(loginCommand);
     }
 
@@ -64,8 +66,9 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
     }
 
     @Override
-    public void onDisconnect(TCPConnection tcpConnection) {
-        System.out.println("Connection close from server: " + connection.getSocket());
+    public void onDisconnect(TCPConnection tcpConnection) throws IOException {
+//        System.out.println("Connection close from server: " + connection.getSocket());
+        CollectorLogs.debugging("Connection close from server: " + connection.getSocket());
     }
 
     @Override
@@ -79,7 +82,12 @@ public class ConnectorToServers extends Thread implements TCPConnectionListener 
             IP_ADDR = server.getKey();
             connection = new TCPConnection(this, IP_ADDR, PORT);
         } catch (IOException e) {
-            System.out.println("Connection exception: " + e);
+//            System.out.println("Connection exception: " + e);
+            try {
+                CollectorLogs.debugging("Connection exception: " + e);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
